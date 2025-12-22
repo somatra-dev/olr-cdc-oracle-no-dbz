@@ -1,0 +1,91 @@
+
+services:
+  # ============================================================================
+  # ORACLE DATABASE
+  # ============================================================================
+
+  cdc-oracle-olr:
+    image: container-registry.oracle.com/database/enterprise:19.3.0.0
+    container_name: cdc-oracle-olr
+    hostname: cdc-oracle-olr
+    shm_size: 4gb
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: ORCLPDB1
+      ORACLE_PWD: top_secret
+      ORACLE_CHARACTERSET: AL32UTF8
+      ENABLE_ARCHIVELOG: "true"
+    volumes:
+      - ./scripts-db:/opt/oracle/scripts/startup
+      - oracle_data_cdc:/opt/oracle/oradata
+      - oracle_fra_cdc:/opt/oracle/fast_recovery_area
+    networks:
+      - cdc-net
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "sys/top_secret@//localhost:1521/ORCLCDB as sysdba", "@/dev/null"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 4G
+          cpus: '2.0'
+
+  # ============================================================================
+  # OPENLOGREPLICATOR (Oracle CDC Reader)
+  # ============================================================================
+
+  openlogreplicator:
+    image: bersler/openlogreplicator:debian-13.0-dev
+    container_name: openlogreplicator
+    hostname: openlogreplicator
+    restart: unless-stopped
+    user: "1000:1000"
+    command: >
+      /opt/OpenLogReplicator/OpenLogReplicator
+      --config /opt/OpenLogReplicator/scripts/OpenLogReplicator.json
+      --log-level info
+      --trace 3
+    ports:
+      - "7777:9000"
+    volumes:
+      - ./scripts:/opt/OpenLogReplicator/scripts:ro
+      - ./olr-checkpoint:/opt/OpenLogReplicator/checkpoint
+      - ./olr-log:/opt/OpenLogReplicator/log
+      - oracle_data_cdc:/opt/oracle/oradata:ro
+      - oracle_fra_cdc:/opt/oracle/fast_recovery_area:ro
+    depends_on:
+      cdc-oracle-olr:
+        condition: service_healthy
+    networks:
+      - cdc-net
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  oracle_data_cdc:
+  oracle_fra_cdc:
+
+  # OpenLogReplicator volumes
+  olr_checkpoint:
+  olr_log:
+
+# ============================================================================
+# NETWORKS
+# ============================================================================
+
+networks:
+  cdc-net:
+    external: true
+    name: cdc-net

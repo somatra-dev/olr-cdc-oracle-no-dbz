@@ -1,0 +1,250 @@
+2025-12-22 09:07:46 INFO  00000 OpenLogReplicator v1.8.7 (C) 2018-2025 by Adam Leszczynski (aleszczynski@bersler.com), see LICENSE file for licensing information
+2025-12-22 09:07:46 INFO  00000 arch: x86_64, build-arch: , system: Linux, release: 6.18.2-2-cachyos, build: Debug, compiled: 2025-12-18 09:37, modules: Kafka OCI Prometheus Protobuf
+2025-12-22 09:07:46 INFO  00000 adding source: SOURCE
+2025-12-22 09:07:46 INFO  00000 adding target: KAFKA_DIRECT
+2025-12-22 09:07:46 INFO  00000 writer is starting with Writer: Kafka:oracle.olr.OLR_DB.PRODUCT
+2025-12-22 09:07:46 WARN  10003 file: checkpoint/ORACLE-chkpt.json - get metadata returned: No such file or directory
+2025-12-22 09:07:46 INFO  00000 connecting to the database instance of ORACLE to //cdc-oracle-olr:1521/ORCLPDB1
+2025-12-22 09:07:46 INFO  00000 version: Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production, context: ORCLCDB, resetlogs: 0, activation: 0, con_id: 3, con_name: ORCLPDB1
+2025-12-22 09:07:46 INFO  00000 loading character mapping for AL32UTF8
+2025-12-22 09:07:46 INFO  00000 loading character mapping for AL16UTF16
+2025-12-22 09:07:46 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo01.log
+2025-12-22 09:07:46 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo02.log
+2025-12-22 09:07:46 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo03.log
+2025-12-22 09:07:46 INFO  00000 timezone: +00:00, db-timezone: +00:00, log-timezone: +00:00, host-timezone: +00:00
+2025-12-22 09:07:46 INFO  00000 Replicator for ORACLE in online mode is starting from NOW
+2025-12-22 09:07:46 INFO  00000 current resetlogs is: 1220518521
+2025-12-22 09:07:46 INFO  00000 first data SCN: 0
+2025-12-22 09:07:46 INFO  00000 starting sequence not found - starting with new batch with seq: 7
+2025-12-22 09:07:46 INFO  00000 reading dictionaries for scn: 2148627
+2025-12-22 09:07:48 INFO  00000 - found: OLR_DB.PRODUCT (dataobj: 73008, obj: 73008, columns: 7, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: XDB.X$QN46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21805, obj: 21805, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: XDB.X$PT46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21806, obj: 21806, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: XDB.X$NM46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21804, obj: 21804, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: XDB.XDB$TTSET (dataobj: 20891, obj: 20891, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.TS$ (dataobj: 6, obj: 16, columns: 32, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.CCOL$ (dataobj: 29, obj: 32, columns: 11, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.TABPART$ (dataobj: 812, obj: 812, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.CDEF$ (dataobj: 29, obj: 31, columns: 21, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.OBJ$ (dataobj: 18, obj: 18, columns: 37, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.TABSUBPART$ (dataobj: 824, obj: 824, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.COL$ (dataobj: 2, obj: 21, columns: 37, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.DEFERRED_STG$ (dataobj: 81, obj: 81, columns: 25, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.ECOL$ (dataobj: 152, obj: 152, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.LOBCOMPPART$ (dataobj: 848, obj: 848, columns: 24, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.LOBFRAG$ (dataobj: 845, obj: 845, columns: 16, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 - found: SYS.TAB$ (dataobj: 2, obj: 4, columns: 45, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.USER$ (dataobj: 10, obj: 22, columns: 30, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.LOB$ (dataobj: 2, obj: 109, columns: 18, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:07:48 INFO  00000 - found: SYS.TABCOMPART$ (dataobj: 834, obj: 834, columns: 35, lobs: 0, lob-idx: 0)
+2025-12-22 09:07:48 INFO  00000 last confirmed scn: 2148627, starting sequence: 7, offset: 0
+2025-12-22 09:07:48 INFO  00000 resume writer
+2025-12-22 09:07:48 INFO  00000 found redo log version: 19.0.0, activation: 2991561719, resetlogs: 1220518521, page: 512, sequence: 6, SID: ORCLCDB, endian: LITTLE
+2025-12-22 09:07:48 INFO  00000 processing redo log: group: 1 scn: 2140252 to 0 seq: 7 path: /opt/oracle/oradata/ORCLCDB/redo01.log offset: 1024
+2025-12-22 09:07:48 INFO  00000 new activation detected: 2991561719
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:08:35 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:08:38 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:09:12 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:09:16 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:09:16 INFO  00000 updated metadata: OLR_DB.PRODUCT (dataobj: 73008, obj: 73008, columns: 7, lobs: 0, lob-idx: 0)
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:09:19 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:17:52 INFO  00000 config file changed, reloading
+2025-12-22 09:17:52 INFO  00000 scanning objects which match the configuration file
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:17:52 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:17:52 INFO  00000 - found: OLR_DB.PRODUCT (dataobj: 73008, obj: 73008, columns: 7, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: XDB.X$QN46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21805, obj: 21805, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: XDB.X$PT46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21806, obj: 21806, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: XDB.X$NM46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21804, obj: 21804, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: XDB.XDB$TTSET (dataobj: 20891, obj: 20891, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.TS$ (dataobj: 6, obj: 16, columns: 32, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.CCOL$ (dataobj: 29, obj: 32, columns: 11, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.TABPART$ (dataobj: 812, obj: 812, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.CDEF$ (dataobj: 29, obj: 31, columns: 21, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.OBJ$ (dataobj: 18, obj: 18, columns: 37, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.TABSUBPART$ (dataobj: 824, obj: 824, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.COL$ (dataobj: 2, obj: 21, columns: 37, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.DEFERRED_STG$ (dataobj: 81, obj: 81, columns: 25, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.ECOL$ (dataobj: 152, obj: 152, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.LOBCOMPPART$ (dataobj: 848, obj: 848, columns: 24, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.LOBFRAG$ (dataobj: 845, obj: 845, columns: 16, lobs: 0, lob-idx: 0)
+2025-12-22 09:17:52 INFO  00000 - found: SYS.TAB$ (dataobj: 2, obj: 4, columns: 45, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.USER$ (dataobj: 10, obj: 22, columns: 30, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.LOB$ (dataobj: 2, obj: 109, columns: 18, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:17:52 INFO  00000 - found: SYS.TABCOMPART$ (dataobj: 834, obj: 834, columns: 35, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 OpenLogReplicator v1.8.7 (C) 2018-2025 by Adam Leszczynski (aleszczynski@bersler.com), see LICENSE file for licensing information
+2025-12-22 09:18:21 INFO  00000 arch: x86_64, build-arch: , system: Linux, release: 6.18.2-2-cachyos, build: Debug, compiled: 2025-12-18 09:37, modules: Kafka OCI Prometheus Protobuf
+2025-12-22 09:18:21 INFO  00000 adding source: SOURCE
+2025-12-22 09:18:21 INFO  00000 adding target: KAFKA_DIRECT
+2025-12-22 09:18:21 INFO  00000 writer is starting with Writer: Kafka:oracle.olr.OLR_DB.PRODUCT
+2025-12-22 09:18:21 INFO  00000 checkpoint - all confirmed till scn: 2151400, idx: 0
+2025-12-22 09:18:21 INFO  00000 connecting to the database instance of ORACLE to //cdc-oracle-olr:1521/ORCLPDB1
+2025-12-22 09:18:21 INFO  00000 version: Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production, context: ORCLCDB, resetlogs: 1220518521, activation: 2991561719, con_id: 3, con_name: ORCLPDB1
+2025-12-22 09:18:21 INFO  00000 loading character mapping for AL32UTF8
+2025-12-22 09:18:21 INFO  00000 loading character mapping for AL16UTF16
+2025-12-22 09:18:21 INFO  00000 reading metadata for ORACLE for scn: 2151400
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: CCOL\$ options: 6
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: CDEF\$ options: 6
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: COL\$ options: 6
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: ECOL\$ options: 6
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: DEFERRED_STG\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: LOB\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: LOBCOMPPART\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: LOBFRAG\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: OBJ\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: TAB\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: TABPART\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: TABCOMPART\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: TABSUBPART\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: TS\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: SYS table: USER\$ options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: XDB table: XDB\$TTSET options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: XDB table: X\$NM.* options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: XDB table: X\$PT.* options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: XDB table: X\$QN.* options: 2
+2025-12-22 09:18:21 INFO  00000 - creating table schema for owner: OLR_DB table: PRODUCT options: 0
+2025-12-22 09:18:21 INFO  00000 - found: OLR_DB.PRODUCT (dataobj: 73008, obj: 73008, columns: 7, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: XDB.X$QN46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21805, obj: 21805, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: XDB.X$PT46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21806, obj: 21806, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: XDB.X$NM46MP5MEPA004NE0KWN0SK0K1LN (dataobj: 21804, obj: 21804, columns: 2, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: XDB.XDB$TTSET (dataobj: 20891, obj: 20891, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.TS$ (dataobj: 6, obj: 16, columns: 32, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.CCOL$ (dataobj: 29, obj: 32, columns: 11, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.TABPART$ (dataobj: 812, obj: 812, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.CDEF$ (dataobj: 29, obj: 31, columns: 21, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.OBJ$ (dataobj: 18, obj: 18, columns: 37, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.TABSUBPART$ (dataobj: 824, obj: 824, columns: 26, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.COL$ (dataobj: 2, obj: 21, columns: 37, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.DEFERRED_STG$ (dataobj: 81, obj: 81, columns: 25, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.ECOL$ (dataobj: 152, obj: 152, columns: 4, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.LOBCOMPPART$ (dataobj: 848, obj: 848, columns: 24, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.LOBFRAG$ (dataobj: 845, obj: 845, columns: 16, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 - found: SYS.TAB$ (dataobj: 2, obj: 4, columns: 45, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.USER$ (dataobj: 10, obj: 22, columns: 30, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.LOB$ (dataobj: 2, obj: 109, columns: 18, lobs: 0, lob-idx: 0), part of cluster
+2025-12-22 09:18:21 INFO  00000 - found: SYS.TABCOMPART$ (dataobj: 834, obj: 834, columns: 35, lobs: 0, lob-idx: 0)
+2025-12-22 09:18:21 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo01.log
+2025-12-22 09:18:21 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo02.log
+2025-12-22 09:18:21 INFO  00000 online redo log: /opt/oracle/oradata/ORCLCDB/redo03.log
+2025-12-22 09:18:21 INFO  00000 timezone: +00:00, db-timezone: +00:00, log-timezone: +00:00, host-timezone: +00:00
+2025-12-22 09:18:21 INFO  00000 Replicator for ORACLE in online mode is starting from scn: 2151400
+2025-12-22 09:18:21 INFO  00000 current resetlogs is: 1220518521
+2025-12-22 09:18:21 INFO  00000 first data SCN: 2151400
+2025-12-22 09:18:21 INFO  00000 first schema SCN: 2150118
+2025-12-22 09:18:21 INFO  00000 last confirmed scn: 2151400, starting sequence: 7, offset: 41313280
+2025-12-22 09:18:21 INFO  00000 resume writer
+2025-12-22 09:18:21 INFO  00000 found redo log version: 19.0.0, activation: 2991561719, resetlogs: 1220518521, page: 512, sequence: 6, SID: ORCLCDB, endian: LITTLE
+2025-12-22 09:18:21 INFO  00000 processing redo log: group: 1 scn: 2140252 to 0 seq: 7 path: /opt/oracle/oradata/ORCLCDB/redo01.log offset: 41313280

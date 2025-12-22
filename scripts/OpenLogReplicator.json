@@ -1,0 +1,58 @@
+{
+  "version": "1.8.7",
+  "log-level": 4,
+  "source": [
+    {
+      "alias": "SOURCE",
+      "name": "ORACLE",
+      "reader": {
+        "type": "online",
+        "user": "c##dbzuser",
+        "password": "dbz",
+        "server": "//cdc-oracle-olr:1521/ORCLPDB1"
+      },
+      "format": {
+        "type": "json",
+        "column": 0,
+        "db": 1,
+        "interval-dts": 0,
+        "interval-ytm": 0,
+        "message": 0,
+        "rid": 0,
+        "schema": 0,
+        "timestamp-all": 0,
+        "scn-type": 0,
+        "unknown-type": 0,
+        "xid": 0
+      },
+      "memory": {
+        "min-mb": 64,
+        "max-mb": 1024
+      },
+      "filter": {
+        "table": [
+          {
+            "owner": "OLR_DB",
+            "table": "PRODUCT"
+          }
+        ]
+      }
+    }
+  ],
+  "target": [
+    {
+      "alias": "KAFKA_DIRECT",
+      "source": "SOURCE",
+      "writer": {
+        "type": "kafka",
+        "topic": "oracle.olr.OLR_DB.PRODUCT",
+        "properties": {
+          "bootstrap.servers": "kafka-1:19093,kafka-2:19093,kafka-3:19093",
+          "schema.registry.url": "http://schema-registry:8081",
+          "value.serializer": "io.confluent.kafka.serializers.KafkaAvroSerializer",
+          "key.serializer": "org.apache.kafka.common.serialization.StringSerializer"
+        }
+      }
+    }
+  ]
+}
