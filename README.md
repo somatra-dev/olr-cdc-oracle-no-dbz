@@ -1,4 +1,4 @@
-# Oracle CDC with OpenLogReplicator, and Kafka
+# Oracle CDC with OpenLogReplicator and Kafka
 
 A production-ready Change Data Capture (CDC) pipeline that streams Oracle database changes to Apache Kafka using OpenLogReplicator.
 
@@ -31,30 +31,39 @@ A production-ready Change Data Capture (CDC) pipeline that streams Oracle databa
 |-----------|-------------|
 | Oracle 19c | Source database with ARCHIVELOG enabled |
 | OpenLogReplicator | High-performance Oracle redo log reader |
-| Debezium | CDC connector framework for Kafka Connect |
 | Apache Kafka | Distributed event streaming platform (3-node cluster) |
+| Kafka Connect | JDBC sink connector for PostgreSQL |
 | Schema Registry | Avro schema management for Kafka |
+| ksqlDB | Stream processing engine |
 | Kafka UI | Web interface for monitoring |
-| PostgreSQL | Optional sink database |
+| PostgreSQL | Sink database |
 
 ## Quick Start
 
 ```bash
 # 1. Create Docker network
-docker network create debezium-net
+docker network create cdc-net
 
-# 2. Create required directories
-mkdir -p olr-checkpoint olr-log scripts-db scripts
-sudo chown -R 1000:1000 olr-checkpoint olr-log scripts scripts-db
+# 2. Create required directories for scripts
+mkdir -p scripts-db scripts
 
 # 3. Start Oracle and OpenLogReplicator
 docker compose -f docker-compose-olr.yml up -d
 
-# 4. Wait for Oracle to be healthy, then start Kafka ecosystem
+# 4. Fix volume permissions for OpenLogReplicator (runs as uid 54321)
+docker run --rm \
+  -v orl-oraclenodbz_olr_checkpoint:/checkpoint \
+  -v orl-oraclenodbz_olr_log:/log \
+  alpine chown -R 54321:54321 /checkpoint /log
+
+# 5. Restart OpenLogReplicator to apply permissions
+docker restart openlogreplicator
+
+# 6. Wait for Oracle to be healthy, then start Kafka ecosystem
 docker compose -f docker-compose-main.yml up -d
 
-# 5. Access Kafka UI
-open http://localhost:18000
+# 7. Access Kafka UI
+open http://localhost:8081
 ```
 
 ---
@@ -63,15 +72,20 @@ open http://localhost:18000
 
 ### 1. Directory Setup
 
-Create the required directories and set appropriate permissions:
+Create the required directories for scripts:
 
 ```bash
-# Create directories
-mkdir -p olr-checkpoint olr-log scripts-db scripts
-
-# Set ownership for OpenLogReplicator access
-sudo chown -R 1000:1000 olr-checkpoint olr-log scripts scripts-db
+# Create directories for scripts (mounted as bind mounts)
+mkdir -p scripts-db scripts
 ```
+
+> **Note:** OpenLogReplicator checkpoint and log directories use Docker named volumes (`olr_checkpoint`, `olr_log`). After first run, fix permissions with:
+> ```bash
+> docker run --rm \
+>   -v orl-oraclenodbz_olr_checkpoint:/checkpoint \
+>   -v orl-oraclenodbz_olr_log:/log \
+>   alpine chown -R 54321:54321 /checkpoint /log
+> ```
 
 ### 2. Oracle and OpenLogReplicator Setup
 
@@ -81,19 +95,7 @@ sudo chown -R 1000:1000 olr-checkpoint olr-log scripts scripts-db
 docker network create cdc-net
 ```
 
-#### 2.2 Permission Script
-
-Create `scripts-db/permission.sh`:
-
-```bash
-#!/bin/bash
-# Set permissions for OpenLogReplicator to access Oracle redo logs and datafiles
-
-chmod -R 755 /opt/oracle/oradata/ORCLCDB 2>/dev/null || true
-chmod -R 755 /opt/oracle/fast_recovery_area 2>/dev/null || true
-```
-
-#### 2.3 Oracle Setup SQL
+#### 2.2 Oracle Setup SQL
 
 Create `scripts-db/set-up-olr.sql`:
 
@@ -335,7 +337,7 @@ PROMPT Setup completed successfully!
 PROMPT =====================================================
 ```
 
-#### 2.4 OpenLogReplicator Configuration
+#### 2.3 OpenLogReplicator Configuration
 
 Create `scripts/OpenLogReplicator.json`:
 
@@ -407,7 +409,7 @@ Create `scripts/OpenLogReplicator.json`:
 | `filter.table` | Tables to capture (schema.table) |
 | `target.writer.uri` | Network endpoint for Debezium connection |
 
-#### 2.5 Docker Compose - Oracle and OpenLogReplicator
+#### 2.4 Docker Compose - Oracle and OpenLogReplicator
 
 Create `docker-compose-olr.yml`:
 
@@ -456,18 +458,18 @@ services:
     container_name: openlogreplicator
     hostname: openlogreplicator
     restart: unless-stopped
-    user: "1000:1000"
+    user: "54321:54321"  # Oracle user UID:GID
     command: >
       /opt/OpenLogReplicator/OpenLogReplicator
       --config /opt/OpenLogReplicator/scripts/OpenLogReplicator.json
       --log-level info
       --trace 3
     ports:
-      - "7777:9000"
+      - "9000:9000"
     volumes:
       - ./scripts:/opt/OpenLogReplicator/scripts:ro
-      - ./olr-checkpoint:/opt/OpenLogReplicator/checkpoint
-      - ./olr-log:/opt/OpenLogReplicator/log
+      - olr_checkpoint:/opt/OpenLogReplicator/checkpoint  # Named volume
+      - olr_log:/opt/OpenLogReplicator/log                # Named volume
       - oracle_data_cdc:/opt/oracle/oradata:ro
       - oracle_fra_cdc:/opt/oracle/fast_recovery_area:ro
     depends_on:
@@ -485,10 +487,8 @@ services:
 volumes:
   oracle_data_cdc:
   oracle_fra_cdc:
-
-  # OpenLogReplicator volumes
-  olr_checkpoint:
-  olr_log:
+  olr_checkpoint:  # Requires chown to 54321:54321 after creation
+  olr_log:         # Requires chown to 54321:54321 after creation
 
 # NETWORKS
 networks:
@@ -618,7 +618,7 @@ services:
     volumes:
       - pg_data_cdc:/var/lib/postgresql/data
     networks:
-      - debezium-net
+      - cdc-net
 
   kafka-1:
     image: apache/kafka:4.1.1
@@ -643,7 +643,7 @@ services:
     volumes:
       - kafka_1_vol:/var/lib/kafka/data
     networks:
-      - debezium-net
+      - cdc-net
 
   kafka-2:
     image: apache/kafka:4.1.1
@@ -668,7 +668,7 @@ services:
     volumes:
       - kafka_2_vol:/var/lib/kafka/data
     networks:
-      - debezium-net
+      - cdc-net
 
   kafka-3:
     image: apache/kafka:4.1.1
@@ -693,7 +693,7 @@ services:
     volumes:
       - kafka_3_vol:/var/lib/kafka/data
     networks:
-      - debezium-net
+      - cdc-net
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.8.0
@@ -715,65 +715,29 @@ services:
     volumes:
       - schema_registry_data:/etc/schema-registry/data
     networks:
-      - debezium-net
+      - cdc-net
 
-  debezium-kafka-connect:
-    build: .
-    image: debezium-kafka-connect
-    container_name: debezium-kafka-connect
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-      - schema-registry
-    ports:
-      - "8083:8083"
-    environment:
-      GROUP_ID: cdc_connect-group
-      BOOTSTRAP_SERVERS: "kafka-1:19093,kafka-2:19093,kafka-3:19093"
-      CONFIG_STORAGE_TOPIC: cdc_connect_configs
-      OFFSET_STORAGE_TOPIC: cdc_connect_offsets
-      STATUS_STORAGE_TOPIC: cdc_connect_status
-      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
-      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
-      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
-      CONNECT_SECURITY_PROTOCOL: "PLAINTEXT"
-      CONNECT_PRODUCER_SECURITY_PROTOCOL: "PLAINTEXT"
-      CONNECT_CONSUMER_SECURITY_PROTOCOL: "PLAINTEXT"
-      CONNECT_PRODUCER_REQUEST_TIMEOUT_MS_CONFIG: 60000
-      CONNECT_CONSUMER_REQUEST_TIMEOUT_MS_CONFIG: 60000
-    volumes:
-      - debezium_plugins:/kafka/connect/plugins
-      - debezium_data:/kafka/data
-    networks:
-      - debezium-net
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     ports:
-      - "18000:8080"
+      - "8081:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19093,kafka-2:19093,kafka-3:19093
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: PLAINTEXT
       KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8081
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium-kafka-connect
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://debezium-kafka-connect:8083
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: kafka-connect
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
     volumes:
       - kafka-ui-data:/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:18000/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
       - schema-registry
-      - debezium-kafka-connect
+      - kafka-connect
     deploy:
       resources:
         limits:
@@ -783,7 +747,7 @@ services:
           memory: 1G
           cpus: '0.5'
     networks:
-      - debezium-net
+      - cdc-net
 
 volumes:
   kafka_1_vol:
@@ -797,36 +761,39 @@ volumes:
   schema_registry_data:
 
 networks:
-  debezium-net:
+  cdc-net:
     external: true
-    name: debezium-net
+    name: cdc-net
 ```
 
 ---
 ## Connector Configuration
 ### Source Connector
-We don't debezuim connector for cdc from oracle to Kafka topic. 
+We don't source connector for cdc from ```oracle``` through ```OLR``` to Kafka topic. 
 We direct using the OLR to auto write data to kafka topic.
 ### Sink Connector
 ```url: POST http://localhost:8083/connectors```
 ```json
 {
-  "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-  "connection.url": "jdbc:postgresql://cdc-postgres:5432/",
-  "connection.user": "postgres",
-  "connection.password": "postgres",
-  "topics": "oracle.olr.OLR_DB.PRODUCT",
-  "tasks.max": "1",
-  "auto.create": "true",
-  "auto.evolve": "true",
-  "insert.mode": "upsert",
-  "pk.mode": "record_key",
-  "pk.fields": "ID",
-  "table.name.format": "products",
-  "transforms": "unwrap",
-  "delete.enabled": "true",
-  "transforms.unwrap.drop.tombstones": "false",
-  "transforms.unwrap.delete.handling.mode": "rewrite"
+  "name": "jdbc-sink-postgres",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:postgresql://cdc-postgres:5432/",
+    "connection.user": "postgres",
+    "connection.password": "postgres",
+    "topics": "oracle.olr.OLR_DB.PRODUCT",
+    "tasks.max": "1",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "insert.mode": "upsert",
+    "pk.mode": "record_key",
+    "pk.fields": "ID",
+    "table.name.format": "products",
+    "transforms": "unwrap",
+    "delete.enabled": "true",
+    "transforms.unwrap.drop.tombstones": "false",
+    "transforms.unwrap.delete.handling.mode": "rewrite"
+  }
 }
 ```
 
@@ -854,7 +821,7 @@ DELETE FROM product WHERE id = 1;
 COMMIT;
 ```
 
-Check Kafka UI at `http://localhost:18000` to verify messages are flowing.
+Check Kafka UI at `http://localhost:8081` to verify messages are flowing.
 
 ---
 
@@ -864,8 +831,27 @@ Check Kafka UI at `http://localhost:18000` to verify messages are flowing.
 |-------|----------|
 | Oracle container fails to start | Ensure sufficient memory (8GB minimum) and disk space |
 | OpenLogReplicator cannot connect | Verify Oracle is healthy and permissions are set correctly |
+| OpenLogReplicator "Permission denied" for checkpoint files | Fix named volume ownership (see below) |
 | No messages in Kafka | Check connector status via Kafka Connect REST API |
 | Schema Registry errors | Ensure Kafka brokers are running before Schema Registry starts |
+
+### OpenLogReplicator Volume Permission Fix
+
+If you see errors like:
+```
+ERROR 10006 file: checkpoint/ORACLE-chkpt.json - open for writing returned: Permission denied
+```
+
+This occurs because Docker named volumes are created with root ownership, but OpenLogReplicator runs as user `54321:54321`. Fix with:
+
+```bash
+docker run --rm \
+  -v orl-oraclenodbz_olr_checkpoint:/checkpoint \
+  -v orl-oraclenodbz_olr_log:/log \
+  alpine chown -R 54321:54321 /checkpoint /log
+
+docker restart openlogreplicator
+```
 
 ### Useful Commands
 

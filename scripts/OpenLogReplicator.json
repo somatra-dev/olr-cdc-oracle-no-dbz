@@ -13,17 +13,17 @@
       },
       "format": {
         "type": "json",
-        "column": 0,
-        "db": 1,
-        "interval-dts": 0,
-        "interval-ytm": 0,
-        "message": 0,
-        "rid": 0,
-        "schema": 0,
-        "timestamp-all": 0,
-        "scn-type": 0,
-        "unknown-type": 0,
-        "xid": 0
+        "column": 2,
+        "db": 3,
+        "interval-dts": 9,
+        "interval-ytm": 4,
+        "message": 2,
+        "rid": 1,
+        "schema": 7,
+        "timestamp-all": 1,
+        "scn-type": 1,
+        "unknown-type": 1,
+        "xid": 1
       },
       "memory": {
         "min-mb": 64,
@@ -47,10 +47,7 @@
         "type": "kafka",
         "topic": "oracle.olr.OLR_DB.PRODUCT",
         "properties": {
-          "bootstrap.servers": "kafka-1:19093,kafka-2:19093,kafka-3:19093",
-          "schema.registry.url": "http://schema-registry:8081",
-          "value.serializer": "io.confluent.kafka.serializers.KafkaAvroSerializer",
-          "key.serializer": "org.apache.kafka.common.serialization.StringSerializer"
+          "bootstrap.servers": "kafka-1:19093,kafka-2:19093,kafka-3:19093"
         }
       }
     }
